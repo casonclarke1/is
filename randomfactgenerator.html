@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Random Fun Fact Generator</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f0f4f8;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            flex-direction: column;
+            transition: background-color 0.5s ease;
+        }
+
+        h1 {
+            font-size: 2rem;
+            margin-bottom: 20px;
+            color: #333;
+            text-align: center;
+        }
+
+        .fact-container {
+            background: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            width: 80%;
+            max-width: 600px;
+            text-align: center;
+            transition: transform 0.3s ease;
+        }
+
+        .fact-container p {
+            font-size: 1.2rem;
+            color: #555;
+            margin-bottom: 20px;
+            animation: fadeIn 1s ease;
+        }
+
+        .generate-btn {
+            padding: 10px 20px;
+            background-color: #7851A9;
+            color: #fff;
+            font-size: 1.2rem;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            animation: rotate 1s infinite linear;
+        }
+
+        .generate-btn:hover {
+            background-color: #6a3f97;
+        }
+
+        .generate-btn:active {
+            background-color: #9b74c1;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+
+        @keyframes rotate {
+            0% {
+                transform: rotate(0deg);
+            }
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+
+        .category-btns {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-top: 20px;
+        }
+
+        .category-btns button {
+            padding: 8px 16px;
+            background-color: #6A3F97;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .category-btns button:hover {
+            background-color: #5a2d7b;
+        }
+    </style>
+</head>
+<body>
+    
+    <a href="index.html"><h1>Random Fun Fact Generator</h1></a>
+    <div class="fact-container">
+        <p id="fact">Click the button below to get a random fact!</p>
+        <button class="generate-btn" onclick="generateFact()">Generate Fact</button>
+    </div>
+    
+    <div class="category-btns">
+        <button onclick="setCategory('Science')">Science</button>
+        <button onclick="setCategory('History')">History</button>
+        <button onclick="setCategory('Nature')">Nature</button>
+        <button onclick="setCategory('Space')">Space</button>
+    </div>
+
+    <script>
+        const facts = {
+            Science: [
+                "Did you know? A day on Venus is longer than a year on Venus.",
+                "Water can boil and freeze at the same time under the right conditions – this is called the 'triple point'.",
+                "The Eiffel Tower can be 15 cm taller during the summer due to the expansion of iron in the heat."
+            ],
+            History: [
+                "Cleopatra VII of Egypt lived closer in time to the moon landing than to the construction of the Great Pyramid of Giza.",
+                "The shortest war in history was between Britain and Zanzibar on 27 August 1896. Zanzibar surrendered after 38 minutes.",
+                "Abraham Lincoln was a licensed bartender before becoming the President of the United States."
+            ],
+            Nature: [
+                "Bananas are berries, but strawberries are not!",
+                "A group of flamingos is called a 'flamboyance'.",
+                "An octopus has three hearts and blue blood."
+            ],
+            Space: [
+                "A day on Mars is just a little over 24 hours – 24 hours and 39 minutes, to be exact.",
+                "The largest volcano in the solar system, Olympus Mons, is on Mars and is three times the height of Mount Everest.",
+                "In space, no one can hear you scream, but astronauts can still feel the vibration of a spacecraft."
+            ]
+        };
+
+        let currentCategory = "Science";
+
+        function generateFact() {
+            const randomIndex = Math.floor(Math.random() * facts[currentCategory].length);
+            const factText = facts[currentCategory][randomIndex];
+
+            // Animate background color change
+            document.body.style.backgroundColor = getRandomColor();
+
+            // Display the new fact with animation
+            const factElement = document.getElementById("fact");
+            factElement.textContent = factText;
+
+            // Add animation effect on the fact container
+            const factContainer = document.querySelector(".fact-container");
+            factContainer.style.transform = "scale(1.05)";
+            setTimeout(() => factContainer.style.transform = "scale(1)", 300);
+        }
+
+        function setCategory(category) {
+            currentCategory = category;
+            generateFact();
+        }
+
+        function getRandomColor() {
+            const letters = '0123456789ABCDEF';
+            let color = '#';
+            for (let i = 0; i < 6; i++) {
+                color += letters[Math.floor(Math.random() * 16)];
+            }
+            return color;
+        }
+    </script>
+</body>
+</html>
